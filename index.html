@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>環球鋼鐵 | 專業國際鋼鐵貿易</title>
+    <style>
+        :root {
+            --primary: #1a3b5d;
+            --secondary: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', '微軟正黑體', sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 導航欄 */
+        header {
+            background-color: var(--primary);
+            color: white;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+        
+        /* 輪播區域 */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide-container {
+            position: absolute;
+            width: 500%;  /* 5張圖片 * 100% */
+            height: 100%;
+            display: flex;
+            transition: transform 1s ease-in-out;
+        }
+        
+        .slide {
+            width: 20%;  /* 100% / 5張圖片 */
+            height: 100%;
+            position: relative;
+            background-position: center;
+            background-size: cover;
+            animation: zoomEffect 15s infinite alternate;
+        }
+        
+        @keyframes zoomEffect {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+        
+        .slide::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 10;
+            width: 80%;
+            max-width: 800px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -40%); 
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* 輪播導航點 */
+        .slider-nav {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            z-index: 10;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .slider-dot:hover {
+            transform: scale(1.2);
+        }
+        
+        .slider-dot.active {
+            background-color: var(--secondary);
+            transform: scale(1.2);
+        }
+        
+        /* 輪播箭頭 */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s;
+        }
+        
+        .slider-arrow:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .arrow-left {
+            left: 20px;
+        }
+        
+        .arrow-right {
+            right: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+        }
+        
+        .btn:hover {
+            background-color: #c52232;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        
+        /* 關於我們 */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background-color: var(--secondary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 服務 */
+        .services {
+            background-color: #f9f9f9;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        /* 產品 */
+        .products-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 0;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .products-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .product-card {
+            min-width: 280px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        /* 客戶與合作夥伴 */
+        .clients {
+            background-color: #f9f9f9;
+        }
+        
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .client-logo {
+            background: white;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .client-logo:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* 聯絡我們 */
+        .contact-flex {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .info-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .info-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        
+        .contact-form {
+            flex: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(26, 59, 93, 0.2);
+            outline: none;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        /* 頁尾 */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h4 {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 3px;
+            background-color: var(--secondary);
+            bottom: -8px;
+            left: 0;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-flex {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s;
+            }
+            
+            .nav-links.active {
+                max-height: 400px;
+                padding: 20px 0;
+            }
+            
+            .nav-links li {
+                margin: 10px 20px;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .slider-arrow {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航欄 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">環球<span>鋼鐵</span></div>
+                <ul class="nav-links">
+                    <li><a href="#home">首頁</a></li>
+                    <li><a href="#about">關於我們</a></li>
+                    <li><a href="#services">服務</a></li>
+                    <li><a href="#products">產品</a></li>
+                    <li><a href="#clients">合作夥伴</a></li>
+                    <li><a href="#contact">聯絡我們</a></li>
+                    <li><a href="#">EN</a></li>
+                </ul>
+                <div class="mobile-menu">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 輪播圖區域 -->
+    <section class="hero" id="home">
+        <div class="slide-container">
+            <div class="slide" style="background-image: url('/api/placeholder/1600/900?text=鋼鐵工廠')"></div>
+            <div class="slide" style="background-image: url('/api/placeholder/1600/900?text=國際貿易')"></div>
+            <div class="slide" style="background-image: url('/api/placeholder/1600/900?text=物流運輸')"></div>
+            <div class="slide" style="background-image: url('/api/placeholder/1600/900?text=鋼材產品')"></div>
+            <div class="slide" style="background-image: url('/api/placeholder/1600/900?text=全球合作')"></div>
+        </div>
+        <div class="hero-content">
+            <h1>鋼鐵貿易的全球領導者</h1>
+            <p>我們連接全球鋼材供應鏈，提供高品質鋼材產品和專業貿易服務，成為您值得信賴的長期合作夥伴。</p>
+            <a href="#contact" class="btn">聯絡我們</a>
+        </div>
+        <div class="slider-arrow arrow-left">❮</div>
+        <div class="slider-arrow arrow-right">❯</div>
+        <div class="slider-nav">
+            <div class="slider-dot active" data-index="0"></div>
+            <div class="slider-dot" data-index="1"></div>
+            <div class="slider-dot" data-index="2"></div>
+            <div class="slider-dot" data-index="3"></div>
+            <div class="slider-dot" data-index="4"></div>
+        </div>
+    </section>
+
+    <!-- 關於我們 -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>關於我們</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>專業的國際鋼鐵貿易公司</h3>
+                    <p>環球鋼鐵成立於2005年，是一家專注於國際鋼鐵貿易的領導企業。我們擁有豐富的行業經驗和廣泛的全球供應網絡，致力於為客戶提供高品質的鋼材產品和專業的貿易服務。</p>
+                    <p>我們的業務範圍遍及亞洲、歐洲、美洲和澳洲等地區，與多家知名鋼廠建立了長期穩定的合作關係，確保能夠為客戶提供穩定可靠的產品供應。</p>
+                    <p>環球鋼鐵秉持「誠信、專業、高效、創新」的經營理念，不斷優化供應鏈管理，提升服務品質，成為客戶值得信賴的長期合作夥伴。</p>
+                </div>
+                <div class="about-image">
+                    <img src="/api/placeholder/600/400" alt="環球鋼鐵辦公室" width="100%">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服務 -->
+    <section class="section services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>我們的服務</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🌎</div>
+                    <h3>國際貿易</h3>
+                    <p>提供全方位的鋼材國際貿易服務，包括進出口代理、關稅諮詢、物流規劃等，幫助客戶拓展全球市場。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚢</div>
+                    <h3>物流運輸</h3>
+                    <p>專業的國際物流服務，涵蓋海運、空運、陸運等多種運輸方式，確保貨物安全準時送達目的地。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3>品質檢驗</h3>
+                    <p>嚴格的品質控制體系，從源頭把關，確保提供符合國際標準的高品質鋼材產品。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>市場諮詢</h3>
+                    <p>提供專業的鋼材市場分析和諮詢服務，幫助客戶把握市場動態，制定明智的採購決策。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 產品 -->
+    <section class="section" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>產品展示</h2>
+            </div>
+            <div class="products-slider">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/api/placeholder/280/200" alt="熱軋鋼捲" width="100%">
+                    </div>
+                    <div class="product-info">
+                        <h3>熱軋鋼捲</h3>
+                        <p>不同厚度規格的熱軋鋼捲，適用於各種工業製造。</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/api/placeholder/280/200" alt="冷軋鋼板" width="100%">
+                    </div>
+                    <div class="product-info">
+                        <h3>冷軋鋼板</h3>
+                        <p>表面光滑、尺寸精確的冷軋鋼板，適用於高精度加工。</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/api/placeholder/280/200" alt="鍍鋅鋼板" width="100%">
+                    </div>
+                    <div class="product-info">
+                        <h3>鍍鋅鋼板</h3>
+                        <p>具有優良防腐性能的鍍鋅鋼板，廣泛應用於建築和汽車行業。</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/api/placeholder/280/200" alt="不銹鋼" width="100%">
+                    </div>
+                    <div class="product-info">
+                        <h3>不銹鋼</h3>
+                        <p>不同等級的不銹鋼產品，具有優異的耐腐蝕和耐熱性能。</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/api/placeholder/280/200" alt="結構鋼" width="100%">
+                    </div>
+                    <div class="product-info">
+                        <h3>結構鋼</h3>
+                        <p>各類型結構鋼，適用於建築和大型工程項目。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 客戶與合作夥伴 -->
+    <section class="section clients" id="clients">
+        <div class="container">
+            <div class="section-title">
+                <h2>合作夥伴</h2>
+            </div>
+            <div class="clients-grid">
+                <div class="client-logo">
+                    <img src="/api/placeholder/120/60" alt="合作夥伴 1">
+                </div>
+                <div class="client-logo">
+                    <img src="/api/placeholder/120/60" alt="合作夥伴 2">
+                </div>
+                <div class="client-logo">
+                    <img src="/api/placeholder/120/60" alt="合作夥伴 3">
+                </div>
+                <div class="client-logo">
+                    <img src="/api/placeholder/120/60" alt="合作夥伴 4">
+                </div>
+                <div class="client-logo">
+                    <img src="/api/placeholder/120/60" alt="合作夥伴 5">
+                </div>
+                <div class="client-logo">
+                    <img src="/api/placeholder/120/60" alt="合作夥伴 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯絡我們 -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>聯絡我們</h2>
+            </div>
+            <div class="contact-flex">
+                <div class="contact-info">
+                    <h3>我們期待您的來訊</h3>
+                    <p>無論您有任何問題或需求，都歡迎隨時與我們聯繫。我們的專業團隊將竭誠為您服務。</p>
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div>
+                            <h4>地址</h4>
+                            <p>台北市信義區松高路 123 號 18 樓</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div>
+                            <h4>電話</h4>
+                            <p>+886-2-1234-5678</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">✉️</div>
+                        <div>
+                            <h4>電子郵件</h4>
+                            <p>info@globalsteel.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">電子郵件</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">電話</label>
+                            <input type="tel" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">訊息</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">送出</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">環球<span>鋼鐵</span></div>
+                    <p>專業的國際鋼鐵貿易公司，連接全球鋼材供應鏈，提供高品質產品和專業服務。</p>
+                </div>
+                <div class="footer-links">
+                    <h4>快速連結</h4>
+                    <ul>
+                        <li><a href="#home">首頁</a></li>
+                        <li><a href="#about">關於我們</a></li>
+                        <li><a href="#services">服務</a></li>
+                        <li><a href="#products">產品</a></li>
+                        <li><a href="#contact">聯絡我們</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>產品</h4>
+                    <ul>
+                        <li><a href="#products">熱軋鋼捲</a></li>
+                        <li><a href="#products">冷軋鋼板</a></li>
+                        <li><a href="#products">鍍鋅鋼板</a></li>
+                        <li><a href="#products">不銹鋼</a></li>
+                        <li><a href="#products">結構鋼</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>聯絡方式</h4>
+                    <ul>
+                        <li>📍 台北市信義區松高路 123 號 18 樓</li>
+                        <li>📞 +886-2-1234-5678</li>
+                        <li>✉️ info@globalsteel.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 環球鋼鐵. 保留所有權利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 代碼 -->
+    <script>
+        // 移動菜單切換
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+      
+      // 語言切換功能
+        function toggleLanguage() {
+            const zhElements = document.querySelectorAll('.lang-zh');
+            const enElements = document.querySelectorAll('.lang-en');
+            
+            zhElements.forEach(el => {
+                el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            enElements.forEach(el => {
+                el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            // 設置語言偏好到本地存儲
+            const currentLang = document.querySelector('.lang-zh').style.display === 'none' ? 'en' : 'zh';
+            localStorage.setItem('preferredLanguage', currentLang);
+        }
+        
+        // 載入時檢查語言偏好
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang === 'en') {
+                // 如果保存的偏好是英文，切換到英文
+                toggleLanguage();
+            }
+        });
+        
+        // 輪播圖功能
+        const slideContainer = document.querySelector('.slide-container');
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const arrowLeft = document.querySelector('.arrow-left');
+        const arrowRight = document.querySelector('.arrow-right');
+        
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+        
+        // 設置自動輪播
+        let slideInterval = setInterval(nextSlide, 5000);
+        
+        // 更新輪播圖位置
+        function updateSlidePosition() {
+            slideContainer.style.transform = `translateX(-${currentIndex * 20}%)`;
+            
+            // 更新導航點
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[currentIndex].classList.add('active');
+        }
+        
+        // 下一張輪播圖
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateSlidePosition();
+        }
+        
+        // 上一張輪播圖
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            updateSlidePosition();
+        }
+        
+        // 添加事件監聽器
+        arrowLeft.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            prevSlide();
+            slideInterval = setInterval(nextSlide, 5000);
+        });
+        
+        arrowRight.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            nextSlide();
+            slideInterval = setInterval(nextSlide, 5000);
+        });
+        
+        // 導航點點擊事件
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                currentIndex = parseInt(dot.getAttribute('data-index'));
+                updateSlidePosition();
+                slideInterval = setInterval(nextSlide, 5000);
+            });
+        });
+        
+        // 平滑滾動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // 關閉移動菜單（如果打開）
+                    navLinks.classList.remove('active');
+                    
+                    // 滾動到目標元素
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
